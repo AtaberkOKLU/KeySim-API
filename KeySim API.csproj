@@ -52,6 +52,7 @@
     <Compile Include="ButtonSettingForm.Designer.cs">
       <DependentUpon>ButtonSettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComboBoxItem.cs" />
     <Compile Include="KeyClass.cs" />
     <Compile Include="MainPage.cs">
       <SubType>Form</SubType>
@@ -76,6 +77,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\ButtonSettingForm.datasource" />
+    <None Include="Properties\DataSources\KeyClass.datasource" />
+    <None Include="Properties\DataSources\KeySim_API.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\KeySim_API.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\MainPage.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

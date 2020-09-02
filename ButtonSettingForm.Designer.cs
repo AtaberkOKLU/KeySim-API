@@ -32,18 +32,19 @@ namespace KeySim_API
                     }
                 }
             }
-
         }
 
         private static readonly DataTable dataTable1= ReadExcelFile("Sheet1", "C:/Users/ataberk.oklu/Documents/Keys.xlsx");
+        
+        public object[] ValueComboBoxList = new object[] { };
 
         List<KeyClass> KeyList = dataTable1.AsEnumerable().Select(row =>
            new KeyClass {
-               UniqueID = Convert.ToInt32(row[0]),
+               UniqueID = Convert.ToByte(row[0]),
                Name     = Convert.ToString(row[1]),
-               ReportID = Convert.ToInt32(row[2]),
-               Byte1    = Convert.ToInt32(row[3]),
-               Byte2    = Convert.ToInt32(row[4])
+               ReportID = Convert.ToByte(row[2]),
+               Byte1    = Convert.ToByte(row[3]),
+               Byte2    = Convert.ToByte(row[4])
            }).ToList();
 
         /// <summary>
@@ -77,6 +78,8 @@ namespace KeySim_API
             this.name_textbox = new System.Windows.Forms.TextBox();
             this.function_combobox = new System.Windows.Forms.ComboBox();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.ValueComboBox = new System.Windows.Forms.ComboBox();
+            this.ValueLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // name_label
@@ -91,7 +94,7 @@ namespace KeySim_API
             // function_label
             // 
             this.function_label.AutoSize = true;
-            this.function_label.Location = new System.Drawing.Point(58, 107);
+            this.function_label.Location = new System.Drawing.Point(58, 133);
             this.function_label.Name = "function_label";
             this.function_label.Size = new System.Drawing.Size(51, 13);
             this.function_label.TabIndex = 1;
@@ -110,11 +113,13 @@ namespace KeySim_API
             this.function_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.function_combobox.Items.AddRange(new object[] {
             "Keyboard",
-            "Mouse"});
-            this.function_combobox.Location = new System.Drawing.Point(144, 104);
+            "Mouse",
+            "Custom"});
+            this.function_combobox.Location = new System.Drawing.Point(144, 130);
             this.function_combobox.Name = "function_combobox";
             this.function_combobox.Size = new System.Drawing.Size(166, 21);
             this.function_combobox.TabIndex = 3;
+            this.function_combobox.SelectedIndexChanged += new System.EventHandler(this.Function_combobox_SelectedIndexChanged);
             // 
             // SaveButton
             // 
@@ -125,11 +130,31 @@ namespace KeySim_API
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
             // 
+            // ValueComboBox
+            // 
+            this.ValueComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ValueComboBox.FormattingEnabled = true;
+            this.ValueComboBox.Location = new System.Drawing.Point(145, 215);
+            this.ValueComboBox.Name = "ValueComboBox";
+            this.ValueComboBox.Size = new System.Drawing.Size(166, 21);
+            this.ValueComboBox.TabIndex = 5;
+            // 
+            // ValueLabel
+            // 
+            this.ValueLabel.AutoSize = true;
+            this.ValueLabel.Location = new System.Drawing.Point(59, 218);
+            this.ValueLabel.Name = "ValueLabel";
+            this.ValueLabel.Size = new System.Drawing.Size(37, 13);
+            this.ValueLabel.TabIndex = 6;
+            this.ValueLabel.Text = "Value:";
+            // 
             // ButtonSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(483, 450);
+            this.Controls.Add(this.ValueLabel);
+            this.Controls.Add(this.ValueComboBox);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.function_combobox);
             this.Controls.Add(this.name_textbox);
@@ -149,5 +174,7 @@ namespace KeySim_API
         private System.Windows.Forms.TextBox name_textbox;
         private System.Windows.Forms.ComboBox function_combobox;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.ComboBox ValueComboBox;
+        private System.Windows.Forms.Label ValueLabel;
     }
 }
