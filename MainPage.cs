@@ -19,7 +19,7 @@ namespace KeySim_API
 
         private void Key1_button_Click(object sender, EventArgs e)
         {
-            Form ButtonSettingPage = new ButtonSettingForm();
+            Form ButtonSettingPage = new ButtonSettingForm(0);
             ButtonSettingPage.Show();
         }
     }

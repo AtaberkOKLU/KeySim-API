@@ -1,7 +1,51 @@
-﻿namespace KeySim_API
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
+using System.Linq;
+
+namespace KeySim_API
 {
     partial class ButtonSettingForm
     {
+        private static DataTable ReadExcelFile(string sheetName, string path)
+        {
+            using (OleDbConnection conn = new OleDbConnection())
+            {
+                DataTable dt = new DataTable();
+                string Import_FileName = path;
+                string fileExtension = Path.GetExtension(Import_FileName);
+                if (fileExtension == ".xls")
+                    conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
+                if (fileExtension == ".xlsx")
+                    conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+                using (OleDbCommand comm = new OleDbCommand())
+                {
+                    comm.CommandText = "Select * from [" + sheetName + "$]";
+                    comm.Connection = conn;
+                    using (OleDbDataAdapter da = new OleDbDataAdapter())
+                    {
+                        da.SelectCommand = comm;
+                        da.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+
+        }
+
+        private static readonly DataTable dataTable1= ReadExcelFile("Sheet1", "C:/Users/ataberk.oklu/Documents/Keys.xlsx");
+
+        List<KeyClass> KeyList = dataTable1.AsEnumerable().Select(row =>
+           new KeyClass {
+               UniqueID = Convert.ToInt32(row[0]),
+               Name     = Convert.ToString(row[1]),
+               ReportID = Convert.ToInt32(row[2]),
+               Byte1    = Convert.ToInt32(row[3]),
+               Byte2    = Convert.ToInt32(row[4])
+           }).ToList();
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -26,7 +70,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent(Int16 buttonNumber)
         {
             this.name_label = new System.Windows.Forms.Label();
             this.function_label = new System.Windows.Forms.Label();
@@ -59,6 +103,7 @@
             this.name_textbox.Name = "name_textbox";
             this.name_textbox.Size = new System.Drawing.Size(167, 20);
             this.name_textbox.TabIndex = 2;
+            this.name_textbox.Text = KeyList[buttonNumber].Name;
             // 
             // function_combobox
             // 
