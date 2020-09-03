@@ -112,9 +112,10 @@ namespace KeySim_API
             // 
             this.function_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.function_combobox.Items.AddRange(new object[] {
+            "Custom",
             "Keyboard",
-            "Mouse",
-            "Custom"});
+            "Mouse"});
+            this.function_combobox.SelectedIndex = KeyList[buttonNumber].ReportID;
             this.function_combobox.Location = new System.Drawing.Point(144, 130);
             this.function_combobox.Name = "function_combobox";
             this.function_combobox.Size = new System.Drawing.Size(166, 21);
@@ -129,6 +130,7 @@ namespace KeySim_API
             this.SaveButton.TabIndex = 4;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.Save_button_Click);
             // 
             // ValueComboBox
             // 
@@ -138,6 +140,10 @@ namespace KeySim_API
             this.ValueComboBox.Name = "ValueComboBox";
             this.ValueComboBox.Size = new System.Drawing.Size(166, 21);
             this.ValueComboBox.TabIndex = 5;
+            if(KeyList[buttonNumber].ReportID == 0x01) 
+                this.ValueComboBox.DataSource = keyboardActionsList;
+            else if (KeyList[buttonNumber].ReportID == 0x02)
+                this.ValueComboBox.DataSource = mouseActionsList;
             // 
             // ValueLabel
             // 
@@ -164,7 +170,6 @@ namespace KeySim_API
             this.Text = "ButtonSettingForm";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
