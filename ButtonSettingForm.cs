@@ -83,10 +83,6 @@ namespace KeySim_API
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
 
-
-            /*SerialPort _serialPort = new SerialPort("COM2", 115200, Parity.Even, 8, StopBits.One);
-            _serialPort.Handshake = Handshake.None;
-
             Byte[] Key_UART_Frame = {
                 KeyList[buttonNumber].UniqueID,
                 SelectedKey.Value.ReportID,
@@ -94,16 +90,26 @@ namespace KeySim_API
                 SelectedKey.Value.Byte2
             };
 
+            SerialPort _serialPort      = new SerialPort();
+            _serialPort.PortName        = "COM2";
+            _serialPort.BaudRate        = 115200;
+            _serialPort.Parity          = Parity.Even;
+            _serialPort.DataBits        = 8;
+            _serialPort.StopBits        = StopBits.One;
+            _serialPort.Handshake       = Handshake.None;
+            _serialPort.WriteTimeout    = 500;
+
             try
             {
                 if (!(_serialPort.IsOpen))
                     _serialPort.Open();
                 _serialPort.Write(Key_UART_Frame, 0, 4);
+                _serialPort.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error opening/writing to serial port :: " + ex.Message, "Error!");
-            }*/
+                MessageBox.Show("Error opening/writing to serial port: " + ex.Message, "Error!");
+            }
 
 
         }
